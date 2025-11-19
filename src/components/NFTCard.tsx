@@ -142,11 +142,14 @@ const NFTCard: React.FC<NFTCardProps> = ({
       ctx.fillText('CeloIQ - CELO Network', canvas.width / 2, 880);
       
       // Decorative emojis
-      ctx.font = '40px Arial';
-      ctx.fillText('⚡', 200, 200);
-      ctx.fillText('🚀', canvas.width - 200, 200);
-      ctx.fillText('💎', 200, canvas.width - 200);
-      ctx.fillText('🎯', canvas.width - 200, canvas.width - 200);
+      // Load and draw CELO logo at corners
+      const logo = new Image();
+      logo.src = '/celo.png';
+      await new Promise((resolve) => { logo.onload = resolve; });
+      ctx.drawImage(logo, 150, 150, 100, 100);
+      ctx.drawImage(logo, canvas.width - 250, 150, 100, 100);
+      ctx.drawImage(logo, 150, canvas.width - 250, 100, 100);
+      ctx.drawImage(logo, canvas.width - 250, canvas.width - 250, 100, 100);
 
       return canvas.toDataURL('image/png');
     } catch (error) {
@@ -304,7 +307,7 @@ const NFTCard: React.FC<NFTCardProps> = ({
           {/* Congratulatory Message */}
           <div className="congrats-box">
             <p className="congrats-text">🎉 Outstanding Achievement! 🎉</p>
-            <p className="congrats-subtext">⚡ CELO Expert Certified 💎</p>
+            <p className="congrats-subtext"><img src="/celo.png" alt="CELO" style={{width: '16px', height: 'auto', verticalAlign: 'middle'}} /> CELO Expert Certified <img src="/celo.png" alt="CELO" style={{width: '16px', height: 'auto', verticalAlign: 'middle'}} /></p>
           </div>
         </div>
       </div>
