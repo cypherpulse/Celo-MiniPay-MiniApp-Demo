@@ -160,7 +160,9 @@ function App() {
       <div className="app">
         <div className="welcome-screen">
           <div className="welcome-card">
-            <div className="welcome-icon">⚡</div>
+            <div className="welcome-icon">
+              <img src="/celo.png" alt="CELO Logo" style={{width: '80px', height: 'auto'}} />
+            </div>
             <h1 className="welcome-title">Welcome to CeloIQ</h1>
             <p className="welcome-description">
               Test your knowledge about the CELO blockchain and earn an exclusive NFT badge for exceptional performance (90%+)
@@ -193,16 +195,16 @@ function App() {
 
             <div className="welcome-features">
               <div className="feature-item">
-                <span className="feature-icon">📊</span>
+                <span className="feature-icon"><img src="/celo.png" alt="CELO" style={{width: '32px', height: 'auto'}} /></span>
                 <span className="feature-text">10 Questions</span>
               </div>
               <div className="feature-item">
-                <span className="feature-icon">🏆</span>
-                <span className="feature-text">NFT Reward at 90%+</span>
+                <span className="feature-icon"><img src="/celo.png" alt="CELO" style={{width: '32px', height: 'auto'}} /></span>
+                <span className="feature-text">NFT Rewards</span>
               </div>
               <div className="feature-item">
-                <span className="feature-icon">⛓️</span>
-                <span className="feature-text">On-Chain Verification</span>
+                <span className="feature-icon"><img src="/celo.png" alt="CELO" style={{width: '32px', height: 'auto'}} /></span>
+                <span className="feature-text">On-Chain Score</span>
               </div>
             </div>
           </div>
@@ -217,7 +219,7 @@ function App() {
         <div className="header-content">
           <div className="header-left">
             <h1 className="app-title">
-              <span className="celo-logo">⚡</span>
+              <img src="/celo.png" alt="CELO Logo" className="celo-logo" />
               CeloIQ
             </h1>
             <p className="app-subtitle">Test Your CELO Blockchain Intelligence</p>
@@ -285,7 +287,8 @@ function App() {
 
         {!userAddress && (
           <div className="wallet-reminder">
-            💡 Connect your wallet to save your score on the CELO blockchain!
+            <img src="/celo.png" alt="CELO" style={{width: '20px', height: 'auto', verticalAlign: 'middle', marginRight: '8px'}} />
+            Connect your wallet to save your score on the CELO blockchain!
           </div>
         )}
       </main>
