@@ -20,7 +20,12 @@
 body {
   margin: 0;
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #0a0e27;
+  background-image: 
+    radial-gradient(at 20% 30%, rgba(247, 250, 80, 0.15) 0px, transparent 50%),
+    radial-gradient(at 80% 70%, rgba(53, 208, 127, 0.15) 0px, transparent 50%),
+    radial-gradient(at 50% 50%, rgba(94, 163, 59, 0.1) 0px, transparent 50%);
+  background-attachment: fixed;
 }
 
 #root {
