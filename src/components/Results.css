@@ -1,0 +1,209 @@
+.results-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  padding: 2rem;
+}
+
+.results-card {
+  background: white;
+  border-radius: 16px;
+  padding: 3rem;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+  animation: scaleIn 0.4s ease-out;
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.results-emoji {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  animation: bounce 0.6s ease-out;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.results-title {
+  font-size: 2rem;
+  color: #2e3148;
+  margin-bottom: 2rem;
+  font-weight: 700;
+}
+
+.score-display {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  margin: 2rem 0;
+  padding: 2rem;
+  background: linear-gradient(135deg, #35d07f 0%, #28a745 100%);
+  border-radius: 12px;
+  color: white;
+}
+
+.score-number {
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+.score-percentage {
+  font-size: 2rem;
+  font-weight: 600;
+  opacity: 0.9;
+}
+
+.results-message {
+  font-size: 1.25rem;
+  color: #495057;
+  margin: 1.5rem 0;
+  font-weight: 500;
+}
+
+.wallet-info {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 2rem 0;
+}
+
+.connected-text {
+  font-size: 0.875rem;
+  color: #6c757d;
+  margin-bottom: 0.5rem;
+}
+
+.wallet-address {
+  font-family: 'Courier New', monospace;
+  font-size: 1rem;
+  color: #35d07f;
+  font-weight: 600;
+  margin: 0.5rem 0;
+}
+
+.blockchain-note {
+  font-size: 0.875rem;
+  color: #495057;
+  margin-top: 0.5rem;
+}
+
+.results-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.retry-button,
+.learn-button {
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  display: inline-block;
+  border: none;
+}
+
+.retry-button {
+  background: #35d07f;
+  color: white;
+}
+
+.retry-button:hover {
+  background: #2bb36a;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(53, 208, 127, 0.3);
+}
+
+.learn-button {
+  background: white;
+  color: #35d07f;
+  border: 2px solid #35d07f;
+}
+
+.learn-button:hover {
+  background: #35d07f;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(53, 208, 127, 0.3);
+}
+
+.celo-info {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 2px solid #e9ecef;
+  text-align: left;
+}
+
+.celo-info h3 {
+  color: #35d07f;
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.celo-info p {
+  color: #495057;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.celo-info a {
+  color: #35d07f;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.celo-info a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .results-card {
+    padding: 2rem;
+  }
+  
+  .results-emoji {
+    font-size: 3rem;
+  }
+  
+  .results-title {
+    font-size: 1.5rem;
+  }
+  
+  .score-display {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.5rem;
+  }
+  
+  .score-number {
+    font-size: 2rem;
+  }
+  
+  .score-percentage {
+    font-size: 1.5rem;
+  }
+}
