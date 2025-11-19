@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import QuestionCard from './components/QuestionCard';
 import Results from './components/Results';
-import { quizQuestions } from './quizData';
+import { shuffleQuestions } from './quizData';
 import type { Question } from './quizData';
 import './App.css';
 
@@ -11,12 +11,15 @@ interface Answer {
 }
 
 function App() {
+  const [userName, setUserName] = useState<string>('');
+  const [hasStarted, setHasStarted] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<Answer[]>([]);
   const [showResult, setShowResult] = useState(false);
   const [quizComplete, setQuizComplete] = useState(false);
   const [userAddress, setUserAddress] = useState<string>('');
   const [isConnecting, setIsConnecting] = useState(false);
+  const [quizQuestions, setQuizQuestions] = useState<Question[]>(() => shuffleQuestions([], 10));
 
   const currentQuestion = quizQuestions[currentQuestionIndex];
   const currentAnswer = answers.find(a => a.questionId === currentQuestion.id);
@@ -36,9 +39,9 @@ function App() {
             method: 'wallet_switchEthereumChain',
             params: [{ chainId: '0xaef3' }], // 44787 in hex (Alfajores Testnet)
           });
-        } catch (switchError: any) {
+        } catch (switchError: unknown) {
           // Chain doesn't exist, add it
-          if (switchError.code === 4902) {
+          if (switchError && typeof switchError === 'object' && 'code' in switchError && switchError.code === 4902) {
             await window.ethereum.request({
               method: 'wallet_addEthereumChain',
               params: [{
@@ -111,6 +114,10 @@ function App() {
     setAnswers([]);
     setShowResult(false);
     setQuizComplete(false);
+    setHasStarted(false);
+    setUserName('');
+    // Reshuffle questions for a new quiz attempt
+    setQuizQuestions(shuffleQuestions([], 10));
   };
 
   if (quizComplete) {
@@ -121,7 +128,64 @@ function App() {
           totalQuestions={quizQuestions.length}
           onRetry={resetQuiz}
           userAddress={userAddress}
+          userName={userName}
         />
+      </div>
+    );
+  }
+
+  if (!hasStarted) {
+    return (
+      <div className="app">
+        <div className="welcome-screen">
+          <div className="welcome-card">
+            <div className="welcome-icon">⚡</div>
+            <h1 className="welcome-title">Welcome to CeloIQ</h1>
+            <p className="welcome-description">
+              Test your knowledge about the CELO blockchain and earn an exclusive NFT badge for exceptional performance (90%+)
+            </p>
+            
+            <div className="name-input-section">
+              <label className="input-label">Enter Your Name</label>
+              <input
+                type="text"
+                className="name-input"
+                placeholder="Your name..."
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter' && userName.trim()) {
+                    setHasStarted(true);
+                  }
+                }}
+                autoFocus
+              />
+            </div>
+
+            <button
+              className="start-button"
+              onClick={() => setHasStarted(true)}
+              disabled={!userName.trim()}
+            >
+              Begin Intelligence Test
+            </button>
+
+            <div className="welcome-features">
+              <div className="feature-item">
+                <span className="feature-icon">📊</span>
+                <span className="feature-text">10 Questions</span>
+              </div>
+              <div className="feature-item">
+                <span className="feature-icon">🏆</span>
+                <span className="feature-text">NFT Reward at 90%+</span>
+              </div>
+              <div className="feature-item">
+                <span className="feature-icon">⛓️</span>
+                <span className="feature-text">On-Chain Verification</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
@@ -132,10 +196,10 @@ function App() {
         <div className="header-content">
           <div className="header-left">
             <h1 className="app-title">
-              <span className="celo-logo">🌐</span>
-              CELO Quiz Challenge
+              <span className="celo-logo">⚡</span>
+              CeloIQ
             </h1>
-            <p className="app-subtitle">Test your knowledge about the CELO blockchain</p>
+            <p className="app-subtitle">Test Your CELO Blockchain Intelligence</p>
           </div>
           
           {!userAddress ? (
