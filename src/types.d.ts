@@ -1,7 +1,12 @@
-// Type declarations for window.ethereum
+// Type declarations for window.ethereum and MiniPay
 declare global {
   interface Window {
-    ethereum?: any;
+    ethereum?: {
+      request: (args: { method: string; params?: unknown[] }) => Promise<unknown>;
+      isMiniPay?: boolean;
+      isMetaMask?: boolean;
+      [key: string]: unknown;
+    };
   }
 }
 
