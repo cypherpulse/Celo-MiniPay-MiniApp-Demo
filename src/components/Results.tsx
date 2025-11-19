@@ -1,4 +1,5 @@
 import React from 'react';
+import NFTCard from './NFTCard';
 import './Results.css';
 
 interface ResultsProps {
@@ -6,18 +7,22 @@ interface ResultsProps {
   totalQuestions: number;
   onRetry: () => void;
   userAddress?: string;
+  userName: string;
 }
 
 const Results: React.FC<ResultsProps> = ({
   score,
   totalQuestions,
   onRetry,
-  userAddress
+  userAddress,
+  userName
 }) => {
   const percentage = (score / totalQuestions) * 100;
+  const earnedNFT = percentage >= 90;
   
   const getMessage = () => {
     if (percentage === 100) return "Perfect! You're a CELO expert! 🎉";
+    if (percentage >= 90) return "Outstanding! You've earned the CELO Master NFT! 🏆";
     if (percentage >= 80) return "Excellent! You know CELO well! 🌟";
     if (percentage >= 60) return "Good job! Keep learning about CELO! 👍";
     if (percentage >= 40) return "Not bad! Review the CELO docs to improve! 📚";
@@ -25,7 +30,7 @@ const Results: React.FC<ResultsProps> = ({
   };
   
   const getEmoji = () => {
-    if (percentage === 100) return "🏆";
+    if (percentage >= 90) return "🏆";
     if (percentage >= 80) return "🎯";
     if (percentage >= 60) return "👏";
     if (percentage >= 40) return "📖";
@@ -34,6 +39,14 @@ const Results: React.FC<ResultsProps> = ({
   
   return (
     <div className="results-container">
+      {earnedNFT && (
+        <NFTCard
+          name={userName}
+          score={score}
+          totalQuestions={totalQuestions}
+        />
+      )}
+      
       <div className="results-card">
         <div className="results-emoji">{getEmoji()}</div>
         <h2 className="results-title">Quiz Complete!</h2>
