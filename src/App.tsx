@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import QuestionCard from './components/QuestionCard';
 import Results from './components/Results';
 import { shuffleQuestions } from './quizData';
@@ -19,10 +19,31 @@ function App() {
   const [quizComplete, setQuizComplete] = useState(false);
   const [userAddress, setUserAddress] = useState<string>('');
   const [isConnecting, setIsConnecting] = useState(false);
+  const [isMiniPay, setIsMiniPay] = useState(false);
   const [quizQuestions, setQuizQuestions] = useState<Question[]>(() => shuffleQuestions([], 10));
 
   const currentQuestion = quizQuestions[currentQuestionIndex];
   const currentAnswer = answers.find(a => a.questionId === currentQuestion.id);
+
+  // Detect and auto-connect to MiniPay
+  useEffect(() => {
+    const detectAndConnectMiniPay = async () => {
+      if (window.ethereum && window.ethereum.isMiniPay) {
+        setIsMiniPay(true);
+        try {
+          // Auto-connect to MiniPay wallet
+          const accounts = await window.ethereum.request({
+            method: 'eth_requestAccounts'
+          }) as string[];
+          setUserAddress(accounts[0]);
+        } catch (error) {
+          console.error('Error auto-connecting to MiniPay:', error);
+        }
+      }
+    };
+
+    detectAndConnectMiniPay();
+  }, []);
 
   // Connect to MetaMask or other Web3 wallet
   const connectWallet = async () => {
@@ -31,7 +52,7 @@ function App() {
         setIsConnecting(true);
         const accounts = await window.ethereum.request({
           method: 'eth_requestAccounts'
-        });
+        }) as string[];
         
         // Switch to CELO Mainnet (Chain ID: 42220) or Alfajores Testnet (Chain ID: 44787)
         try {
@@ -202,7 +223,8 @@ function App() {
             <p className="app-subtitle">Test Your CELO Blockchain Intelligence</p>
           </div>
           
-          {!userAddress ? (
+          {/* Hide connect button when in MiniPay - wallet is auto-connected */}
+          {!isMiniPay && !userAddress ? (
             <button 
               className="connect-wallet-button" 
               onClick={connectWallet}
@@ -210,14 +232,16 @@ function App() {
             >
               {isConnecting ? 'Connecting...' : 'Connect Wallet'}
             </button>
-          ) : (
+          ) : userAddress ? (
             <div className="wallet-connected">
-              <div className="connected-badge">✓ Connected</div>
+              <div className="connected-badge">
+                ✓ {isMiniPay ? 'MiniPay' : 'Connected'}
+              </div>
               <div className="wallet-address-display">
                 {userAddress.substring(0, 6)}...{userAddress.substring(userAddress.length - 4)}
               </div>
             </div>
-          )}
+          ) : null}
         </div>
       </header>
 
