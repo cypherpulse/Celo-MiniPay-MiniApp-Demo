@@ -1,10 +1,12 @@
 .question-card {
-  background: white;
-  border-radius: 12px;
+  background: rgba(15, 23, 42, 0.8);
+  border-radius: 16px;
   padding: 2rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 40px rgba(247, 250, 80, 0.1);
   margin: 2rem 0;
   animation: slideIn 0.3s ease-out;
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(247, 250, 80, 0.2);
 }
 
 @keyframes slideIn {
@@ -19,17 +21,18 @@
 }
 
 .question-number {
-  color: #35d07f;
+  color: #f7fa50;
   font-size: 1rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
   text-transform: uppercase;
+  text-shadow: 0 0 15px rgba(247, 250, 80, 0.6), 0 0 30px rgba(247, 250, 80, 0.3);
 }
 
 .question-text {
   font-size: 1.5rem;
   font-weight: 600;
-  color: #2e3148;
+  color: #ffffff;
   margin-bottom: 2rem;
   line-height: 1.4;
 }
@@ -44,26 +47,30 @@
   display: flex;
   align-items: center;
   padding: 1rem 1.5rem;
-  background: #f8f9fa;
-  border: 2px solid #e9ecef;
-  border-radius: 8px;
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  border-radius: 12px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
   font-size: 1rem;
   text-align: left;
   width: 100%;
+  color: #ffffff;
+  backdrop-filter: blur(10px);
 }
 
 .option-button:hover:not(:disabled) {
-  background: #e9ecef;
-  border-color: #35d07f;
-  transform: translateX(4px);
+  background: rgba(30, 41, 59, 0.8);
+  border-color: rgba(247, 250, 80, 0.6);
+  transform: translateX(8px);
+  box-shadow: 0 0 20px rgba(247, 250, 80, 0.2);
 }
 
 .option-button.selected {
-  background: #35d07f;
-  border-color: #35d07f;
-  color: white;
+  background: rgba(247, 250, 80, 0.2);
+  border-color: #f7fa50;
+  color: #ffffff;
+  box-shadow: 0 0 25px rgba(247, 250, 80, 0.4), inset 0 0 20px rgba(247, 250, 80, 0.1);
 }
 
 .option-button.correct {
