@@ -1,15 +1,17 @@
-# CELO Quiz App 🌐
+# CeloIQ ⚡
 
-A fun and interactive quiz application about the CELO blockchain built with React, TypeScript, and Vite. Test your knowledge about CELO and connect your wallet to the CELO network!
+A futuristic, sci-fi themed intelligence testing platform for CELO blockchain knowledge. Built with React, TypeScript, and Vite, featuring unique NFT rewards for top performers.
 
 ## Features
 
-- ✨ Interactive quiz with 5 questions about CELO blockchain
-- 🔐 MetaMask wallet integration
-- 🌐 Automatic CELO Alfajores Testnet connection
-- 📊 Score tracking and results display
-- 🎨 Beautiful, responsive UI with animations
-- ⛓️ Smart contract ready for on-chain score storage
+- ⚡ **Personalized Experience** - Enter your name to begin your intelligence test
+- 🧠 **10 Challenging Questions** - Test your knowledge about CELO blockchain
+- 🏆 **NFT Rewards** - Earn exclusive CELO Master NFT for scoring 90% or above
+- 🔐 **MetaMask Integration** - Connect your wallet to the CELO network
+- 🌐 **Automatic Network Switching** - Seamless CELO Alfajores Testnet connection
+- 🎨 **Sci-Fi Design** - Dark theme with neon glows and futuristic UI
+- 📊 **Score Tracking** - Real-time progress and comprehensive results
+- ⛓️ **Blockchain Ready** - Smart contract for on-chain verification
 
 ## Prerequisites
 
@@ -44,14 +46,24 @@ The app will open at `http://localhost:5173`
 3. The app will automatically switch to CELO Alfajores Testnet
 4. If you don't have the network configured, it will be added automatically
 
-## Quiz Questions
+## How It Works
 
-The quiz includes questions about:
-- What is CELO?
-- CELO's native token
-- CELO stablecoins (cUSD)
-- Consensus mechanism
-- Unique features of CELO
+1. **Enter Your Name** - Start by providing your name on the welcome screen
+2. **Take the Quiz** - Answer 10 questions about CELO blockchain
+3. **Get Your Score** - See your results and performance breakdown
+4. **Earn NFT** - Score 90% or above to receive a personalized CELO Master NFT card
+
+## Quiz Topics
+
+The intelligence test covers:
+- CELO platform fundamentals
+- Native tokens and stablecoins
+- Consensus mechanisms
+- Block time and performance
+- Identity protocols
+- Reserve mechanisms
+- Validator systems
+- Smart contract development
 
 ## CELO Network Configuration
 
