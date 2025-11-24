@@ -382,6 +382,172 @@ Customize the certificate design in `src/components/NFTCard.tsx`:
 
 ---
 
+## 🟣 Farcaster MiniApp Integration
+
+**CeloIQ is now a Farcaster MiniApp!** Experience seamless quiz gameplay directly within Farcaster clients.
+
+### 🎯 Live Farcaster MiniApp
+
+**MiniApp URL**: [https://celoiq.vercel.app/](https://celoiq.vercel.app/)
+
+### 🧪 Testing in Farcaster
+
+#### Step 1: Access Farcaster
+- Use any Farcaster client (Warpcast, Supercast, etc.)
+- Ensure you have a connected wallet
+
+#### Step 2: Launch CeloIQ
+- Navigate to MiniApps section
+- Search for "CeloIQ" or use direct URL
+- Click to launch the MiniApp
+
+### ✨ Farcaster Features
+
+- **Auto-Connect**: Wallet automatically connects when opened in Farcaster
+- **No Connect Button**: Connect wallet button hidden in MiniApp environment
+- **Farcaster Badge**: Shows "Farcaster" instead of "Connected" in header
+- **Batch Transactions**: Support for EIP-5792 batch operations
+- **Haptic Feedback**: Native device vibration feedback
+- **Quick Auth**: Seamless authentication with Farcaster identity
+
+### 🔧 Technical Implementation
+
+```typescript
+// Initialize Farcaster SDK
+import { sdk, isInMiniApp } from '@farcaster/miniapp-sdk';
+
+// Check if running in Farcaster MiniApp
+if (isInMiniApp()) {
+  await sdk.actions.ready(); // Hide splash screen
+}
+
+// Wagmi configuration for Farcaster
+import { farcasterMiniApp as miniAppConnector } from '@farcaster/miniapp-wagmi-connector';
+
+export const config = createConfig({
+  chains: [celo, celoSepolia],
+  connectors: [miniAppConnector()],
+});
+```
+
+### 📦 Farcaster Dependencies
+
+```json
+{
+  "@farcaster/miniapp-sdk": "^0.2.1",
+  "@farcaster/miniapp-wagmi-connector": "^1.1.0",
+  "wagmi": "^2.19.4",
+  "viem": "^2.39.3"
+}
+```
+
+### 🎮 MiniApp Manifest
+
+```json
+{
+  "name": "CeloIQ - CELO Blockchain Quiz",
+  "description": "Test your CELO blockchain intelligence and earn exclusive NFT rewards",
+  "iconUrl": "https://celoiq.vercel.app/android-chrome-512x512.png",
+  "splashImageUrl": "https://celoiq.vercel.app/android-chrome-512x512.png",
+  "splashBackgroundColor": "#0a0e27",
+  "url": "https://celoiq.vercel.app",
+  "requiredChains": [42220, 44787],
+  "requiredCapabilities": ["eip155"]
+}
+```
+
+---
+
+## 🟣 Farcaster MiniApp Integration
+
+**CeloIQ is now a Farcaster MiniApp!** Experience seamless quiz gameplay directly within Farcaster clients.
+
+### 🎯 Live Farcaster MiniApp
+
+**MiniApp URL**: [https://celoiq.vercel.app/](https://celoiq.vercel.app/)
+
+### 🧪 Testing in Farcaster
+
+#### Step 1: Enable Developer Mode
+1. Open any Farcaster client (Warpcast, etc.)
+2. Go to Settings → Developer Tools
+3. Enable "Developer Mode"
+
+#### Step 2: Preview Your MiniApp
+1. Visit: [Mini App Debug Tool](https://farcaster.xyz/~/developers/mini-apps/debug)
+2. Enter your app URL: `https://celoiq.vercel.app/`
+3. Click "Preview"
+
+#### Step 3: Share & Test
+- Share your MiniApp URL in Farcaster
+- Click the rich preview card to launch
+- Test wallet connection and quiz gameplay
+
+### ✨ Farcaster Features
+
+- **Auto-Connect**: Wallet automatically connects when opened in Farcaster
+- **No Connect Button**: Connect wallet button hidden in MiniApp environment
+- **Farcaster Badge**: Shows "Farcaster" instead of "Connected" in header
+- **Batch Transactions**: Support for EIP-5792 batch operations
+- **Haptic Feedback**: Native device vibration feedback
+- **Quick Auth**: Seamless authentication with Farcaster identity
+
+### 🔧 Technical Implementation
+
+```typescript
+// Initialize Farcaster SDK
+import { sdk } from '@farcaster/miniapp-sdk';
+
+// Check if running in Farcaster MiniApp
+const isFarcasterMiniApp = typeof window !== 'undefined' &&
+  (window as unknown as { isInMiniApp?: () => boolean }).isInMiniApp?.();
+
+if (isFarcasterMiniApp) {
+  await sdk.actions.ready(); // Hide splash screen
+}
+```
+
+### 📦 Farcaster Dependencies
+
+```json
+{
+  "@farcaster/miniapp-sdk": "^0.2.1",
+  "@farcaster/miniapp-wagmi-connector": "^1.1.0",
+  "wagmi": "^2.19.4",
+  "viem": "^2.39.3"
+}
+```
+
+### 🎮 MiniApp Manifest
+
+Located at `/.well-known/farcaster.json`:
+
+```json
+{
+  "miniapp": {
+    "version": "1",
+    "name": "CeloIQ - CELO Blockchain Quiz",
+    "description": "Test your CELO blockchain intelligence and earn exclusive NFT rewards",
+    "iconUrl": "https://celoiq.vercel.app/android-chrome-512x512.png",
+    "splashImageUrl": "https://celoiq.vercel.app/android-chrome-512x512.png",
+    "splashBackgroundColor": "#0a0e27",
+    "homeUrl": "https://celoiq.vercel.app",
+    "requiredChains": [42220, 44787],
+    "requiredCapabilities": ["eip155"],
+    "primaryCategory": "education",
+    "tags": ["blockchain", "quiz", "education", "celo", "nft"]
+  }
+}
+```
+
+### 📱 Embed Meta Tag
+
+```html
+<meta name="fc:miniapp" content='{"version":"1","imageUrl":"https://celoiq.vercel.app/android-chrome-512x512.png","button":{"title":"Take CELO Quiz","action":{"type":"launch_frame","name":"CeloIQ","url":"https://celoiq.vercel.app","splashImageUrl":"https://celoiq.vercel.app/android-chrome-512x512.png","splashBackgroundColor":"#0a0e27"}}}' />
+```
+
+---
+
 ## 📱 MiniPay Integration
 
 **CeloIQ is now a MiniPay Mini App!** Test it directly in the MiniPay wallet.

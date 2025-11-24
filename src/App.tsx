@@ -3,6 +3,7 @@ import QuestionCard from './components/QuestionCard';
 import Results from './components/Results';
 import { shuffleQuestions } from './quizData';
 import type { Question } from './quizData';
+import { sdk } from '@farcaster/miniapp-sdk';
 import './App.css';
 
 interface Answer {
@@ -20,29 +21,57 @@ function App() {
   const [userAddress, setUserAddress] = useState<string>('');
   const [isConnecting, setIsConnecting] = useState(false);
   const [isMiniPay, setIsMiniPay] = useState(false);
+  const [isFarcasterMiniApp, setIsFarcasterMiniApp] = useState(false);
   const [quizQuestions, setQuizQuestions] = useState<Question[]>(() => shuffleQuestions([], 10));
 
   const currentQuestion = quizQuestions[currentQuestionIndex];
   const currentAnswer = answers.find(a => a.questionId === currentQuestion.id);
 
-  // Detect and auto-connect to MiniPay
+  // Initialize Farcaster SDK and detect environment
   useEffect(() => {
-    const detectAndConnectMiniPay = async () => {
-      if (window.ethereum && window.ethereum.isMiniPay) {
-        setIsMiniPay(true);
-        try {
-          // Auto-connect to MiniPay wallet
-          const accounts = await window.ethereum.request({
-            method: 'eth_requestAccounts'
-          }) as string[];
-          setUserAddress(accounts[0]);
-        } catch (error) {
-          console.error('Error auto-connecting to MiniPay:', error);
+    const initializeApp = async () => {
+      try {
+        // Check if running in Farcaster MiniApp
+        const isFarcasterMiniApp = typeof window !== 'undefined' &&
+          (window as unknown as { isInMiniApp?: () => boolean }).isInMiniApp?.();
+
+        if (isFarcasterMiniApp) {
+          setIsFarcasterMiniApp(true);
+          // Initialize SDK and hide splash screen
+          await sdk.actions.ready();
         }
+
+        // Detect and auto-connect to MiniPay or Farcaster
+        if (window.ethereum) {
+          if (window.ethereum.isMiniPay) {
+            setIsMiniPay(true);
+            try {
+              // Auto-connect to MiniPay wallet
+              const accounts = await window.ethereum.request({
+                method: 'eth_requestAccounts'
+              }) as string[];
+              setUserAddress(accounts[0]);
+            } catch (error) {
+              console.error('Error auto-connecting to MiniPay:', error);
+            }
+          } else if (isFarcasterMiniApp) {
+            // Auto-connect in Farcaster MiniApp
+            try {
+              const accounts = await window.ethereum.request({
+                method: 'eth_requestAccounts'
+              }) as string[];
+              setUserAddress(accounts[0]);
+            } catch (error) {
+              console.error('Error auto-connecting to Farcaster wallet:', error);
+            }
+          }
+        }
+      } catch (error) {
+        console.error('Error initializing app:', error);
       }
     };
 
-    detectAndConnectMiniPay();
+    initializeApp();
   }, []);
 
   // Connect to MetaMask or other Web3 wallet
@@ -225,8 +254,8 @@ function App() {
             <p className="app-subtitle">Test Your CELO Blockchain Intelligence</p>
           </div>
           
-          {/* Hide connect button when in MiniPay - wallet is auto-connected */}
-          {!isMiniPay && !userAddress ? (
+          {/* Hide connect button when in MiniPay or Farcaster MiniApp - wallet is auto-connected */}
+          {!isMiniPay && !isFarcasterMiniApp && !userAddress ? (
             <button 
               className="connect-wallet-button" 
               onClick={connectWallet}
@@ -237,7 +266,7 @@ function App() {
           ) : userAddress ? (
             <div className="wallet-connected">
               <div className="connected-badge">
-                ✓ {isMiniPay ? 'MiniPay' : 'Connected'}
+                ✓ {isMiniPay ? 'MiniPay' : isFarcasterMiniApp ? 'Farcaster' : 'Connected'}
               </div>
               <div className="wallet-address-display">
                 {userAddress.substring(0, 6)}...{userAddress.substring(userAddress.length - 4)}
@@ -285,7 +314,7 @@ function App() {
           </button>
         </div>
 
-        {!userAddress && (
+        {!userAddress && !isFarcasterMiniApp && (
           <div className="wallet-reminder">
             <img src="/celo.png" alt="CELO" style={{width: '20px', height: 'auto', verticalAlign: 'middle', marginRight: '8px'}} />
             Connect your wallet to save your score on the CELO blockchain!

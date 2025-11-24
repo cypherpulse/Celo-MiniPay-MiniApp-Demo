@@ -1,0 +1,18 @@
+{
+  "miniapp": {
+    "version": "1",
+    "name": "CeloIQ - CELO Blockchain Quiz",
+    "description": "Test your CELO blockchain intelligence and earn exclusive NFT rewards for exceptional performance",
+    "iconUrl": "https://celoiq.vercel.app/android-chrome-512x512.png",
+    "splashImageUrl": "https://celoiq.vercel.app/android-chrome-512x512.png",
+    "splashBackgroundColor": "#0a0e27",
+    "homeUrl": "https://celoiq.vercel.app",
+    "requiredChains": [42220, 44787],
+    "requiredCapabilities": ["eip155"],
+    "primaryCategory": "education",
+    "tags": ["blockchain", "quiz", "education", "celo", "nft"],
+    "ogTitle": "CeloIQ - CELO Blockchain Intelligence Test",
+    "ogDescription": "Test your CELO blockchain knowledge and earn NFT certificates",
+    "ogImageUrl": "https://celoiq.vercel.app/android-chrome-512x512.png"
+  }
+}
