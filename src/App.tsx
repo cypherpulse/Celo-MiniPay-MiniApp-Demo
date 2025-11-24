@@ -11,10 +11,6 @@ interface Answer {
   selectedAnswer: number;
 }
 
-interface WindowWithFarcaster extends Window {
-  isInMiniApp?: () => boolean;
-}
-
 function App() {
   const [userName, setUserName] = useState<string>('');
   const [hasStarted, setHasStarted] = useState(false);
@@ -35,18 +31,12 @@ function App() {
   useEffect(() => {
     const initializeApp = async () => {
       try {
-        // Check if running in Farcaster MiniApp environment
-        const farcasterWindow = window as WindowWithFarcaster;
-        const isFarcasterMiniApp = typeof window !== 'undefined' &&
-          ((typeof farcasterWindow.isInMiniApp === 'function' && farcasterWindow.isInMiniApp()) ||
-          window.location.search.includes('miniApp=true') ||
-          window.location.pathname.includes('/miniapp') ||
-          window.location.hostname.includes('farcaster') ||
-          document.referrer.includes('farcaster'));
+        // Check if running in Farcaster MiniApp environment using SDK context
+        const context = await sdk.context;
+        const isFarcasterMiniApp = context?.client?.clientFid !== undefined;
 
-        console.log('Farcaster MiniApp detection:', isFarcasterMiniApp);
-        console.log('Window location:', window.location.href);
-        console.log('Document referrer:', document.referrer);
+        console.log('Farcaster SDK context:', context);
+        console.log('Is Farcaster MiniApp:', isFarcasterMiniApp);
 
         if (isFarcasterMiniApp) {
           setIsFarcasterMiniApp(true);
